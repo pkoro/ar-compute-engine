@@ -64,8 +64,8 @@ mdata_final = UNION mdata_full, missing_final;
 
 
 -- Group by hostname,metric to create timelines
-status_detail =	FOREACH  (GROUP mdata_final BY (service,hostname,metric)) {
-	t = ORDER mdata_final BY timestamp ASC;
+status_detail =	FOREACH  (GROUP mdata_full BY (service,hostname,metric)) {
+	t = ORDER mdata_full BY timestamp ASC;
 	GENERATE  FLATTEN( f_PrepStatus(group.service, group.hostname, group.metric, t.(timestamp,status,summary,message,monitoring_host)) );
 };
 

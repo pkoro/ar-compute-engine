@@ -82,8 +82,8 @@ missing_final = foreach missing generate $2 as service, $3 as hostname, $4 as me
 mdata_final = UNION mdata_full, missing_final;
 
 
-endpoints =	FOREACH  (GROUP mdata_final BY (service,hostname)) {
-	GENERATE FLATTEN(f_EndpointTl(group.service, group.hostname, mdata_final.(metric,timestamp,status)));
+endpoints =	FOREACH  (GROUP mdata_full BY (service,hostname)) {
+	GENERATE FLATTEN(f_EndpointTl(group.service, group.hostname, mdata_full.(metric,timestamp,status)));
 };
 
 -- Add Group info (SITES)
